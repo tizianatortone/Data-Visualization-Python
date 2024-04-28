@@ -2,11 +2,12 @@
 This module reads data from a CSV file and generates a plot from said data.
 """
 import csv
+import os
 import matplotlib.pyplot as plt
 
 plt.style.use('dark_background')
 
-def generates_dictionary(data_file):
+def generates_dictionary(DATA):
     """Generates a Dictionary from the data inside the .csv file
        
        Following this structure:
@@ -17,7 +18,8 @@ def generates_dictionary(data_file):
     """
     output = {}
 
-    with open(data_file, 'r', encoding='utf-8') as csvfile:
+
+    with open(DATA, 'r', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for line in reader:
             continent = line['continent']
@@ -40,7 +42,7 @@ def generates_plot(population_dictionary):
         years = population_dictionary[continent]['years']
         population = population_dictionary[continent]['population']
         plt.plot(years, population, label=continent, marker='o')
-        
+
 
 
     plt.title('Continental Internet Population')
@@ -53,7 +55,8 @@ def generates_plot(population_dictionary):
 
     plt.show()
 
-data_file = 'data.csv'
+DATA = 'data.csv'
+file_path = os.path.join(os.path.dirname(__file__), DATA)
 
-continent_population = generates_dictionary(data_file)
+continent_population = generates_dictionary(DATA)
 generates_plot(continent_population)
